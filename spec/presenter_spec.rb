@@ -4,6 +4,10 @@ module MyFilters
   def upcase value
     value.upcase
   end
+
+  def twice_and_a_half value
+    value * 2.5
+  end
 end
 
 class Filterable < HardBoiled::Presenter
@@ -42,7 +46,7 @@ describe HardBoiled::Presenter do
       definition = Filterable.define egg_box do
         contents :from => :eggs do
           colour
-          time :from => :boil_time
+          time :from => :boil_time, :filters => [:twice_and_a_half], :format => "%.2f minutes"
           taste :from => :flavour, :parent => true
           consumer "Lennart", :filters => [:upcase]
         end
@@ -54,7 +58,7 @@ describe HardBoiled::Presenter do
         :contents => [
           {
             :colour => "white",
-            :time => 7,
+            :time => "17.50 minutes",
             :consumer => "LENNART",
             :taste => "extra tasty"
           }

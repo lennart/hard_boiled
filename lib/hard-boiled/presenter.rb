@@ -44,19 +44,22 @@ module HardBoiled
             self.class.define(value, self.subject, &block)
           end
         else
-          v = (format = options[:format]) ? format % value : value
-
-
-          if filters = options[:filters]
-            filters.inject(v) { |result, filter|
-              raise MissingFilterError unless self.respond_to?(filter)
-              self.__send__(filter, result)
-            }
-          else
-            v
-          end
+          v =  
+            if filters = options[:filters]
+              filters.inject(value) { |result, filter|
+                raise MissingFilterError unless self.respond_to?(filter)
+                self.__send__(filter, result)
+              }
+            else
+              value
+            end
+          __format_value v, options
         end
       self
+    end
+
+    def __format_value value, options
+      (format = options[:format]) ? format % value : value
     end
   end
 end
