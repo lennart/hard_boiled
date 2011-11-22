@@ -1,6 +1,6 @@
 ## HardBoiled
 
-simply define mapping from you model to a simple hash.
+simply define mapping from you model to a simple hash. For those who worked with [thoughtbot](http://thoughtbot.com)'s [factory girl](http://github.com/thoughtbot/factory_girl) the DSL should be familiar.
 
 ### Installation
 
