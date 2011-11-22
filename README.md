@@ -21,11 +21,7 @@ HardBoiled::Presenter.define egg do
   time :from => :boil_time
   colour
   temperature :format => "%d ℃"
-end # => {
-  :time => 7,
-  :temperature => "99 ℃",
-  :colour => "beige"
-}
+end # => { :time => 7, :temperature => "99 ℃", :colour => "beige" }
 ```
 
 for more examples see the tests in the `spec` directory.
