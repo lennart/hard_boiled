@@ -39,12 +39,12 @@ describe HardBoiled::Presenter do
     }
 
     it "should allow nested objects" do
-      definition = described_class.define egg_box do
+      definition = Filterable.define egg_box do
         contents :from => :eggs do
           colour
           time :from => :boil_time
           taste :from => :flavour, :parent => true
-          consumer "Lennart"
+          consumer "Lennart", :filters => [:upcase]
         end
 
         date :from => :packaged_at, :format => "on %s"
@@ -55,7 +55,7 @@ describe HardBoiled::Presenter do
           {
             :colour => "white",
             :time => 7,
-            :consumer => "Lennart",
+            :consumer => "LENNART",
             :taste => "extra tasty"
           }
         ],

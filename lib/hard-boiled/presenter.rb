@@ -6,7 +6,7 @@ module HardBoiled
   # although it just reduces a `class` to a simple `Hash`
   class Presenter
     class MissingFilterError < StandardError; end
-    UNPROXIED_METHODS = %w(__send__ __id__ nil? respond_to? send object_id extend instance_eval initialize block_given? raise)
+    UNPROXIED_METHODS = %w(__send__ __id__ nil? respond_to? class send object_id extend instance_eval initialize block_given? raise)
 
     (instance_methods + private_instance_methods).each do |m|
       undef_method m unless UNPROXIED_METHODS.include? m
@@ -38,10 +38,10 @@ module HardBoiled
         if block_given?
           if value.kind_of? Array
             value.map do |v|
-              Presenter.define(v, self.subject, &block)
+              self.class.define(v, self.subject, &block)
             end
           else
-            Presenter.define(value, self.subject, &block)
+            self.class.define(value, self.subject, &block)
           end
         else
           v = (format = options[:format]) ? format % value : value
