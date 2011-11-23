@@ -15,9 +15,10 @@ module HardBoiled
     attr_reader :subject, :parent_subject
 
     def self.define object, parent = nil, &block
-      new(object, parent).
-      instance_eval(&block).
-      to_hash
+      # if I could only remove the duplicate `obj`
+      obj = new(object, parent)
+      obj.instance_eval(&block)
+      obj.to_hash
     end
 
     def initialize subject, parent = nil

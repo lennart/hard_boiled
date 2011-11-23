@@ -41,7 +41,7 @@ describe HardBoiled::Presenter do
   context :nested do
     let(:egg_box) {
       OpenStruct.new({
-        :eggs => [egg],
+        :eggs => [egg, conventional_egg],
         :flavour => "extra tasty",
         :packaged_at => "2011-11-22"
       })
@@ -54,6 +54,7 @@ describe HardBoiled::Presenter do
           time :from => :boil_time, :filters => [:twice_and_a_half], :format => "%.2f minutes"
           taste :from => :flavour, :parent => true
           consumer "Lennart", :filters => [:upcase]
+          "Return value has to be ignored"
         end
 
         date :from => :packaged_at, :format => "on %s"
@@ -64,6 +65,12 @@ describe HardBoiled::Presenter do
           {
             :colour => "white",
             :time => "17.50 minutes",
+            :consumer => "LENNART",
+            :taste => "extra tasty"
+          },
+          {
+            :colour => "brownish",
+            :time => "12.50 minutes",
             :consumer => "LENNART",
             :taste => "extra tasty"
           }
