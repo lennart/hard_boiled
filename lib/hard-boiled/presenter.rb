@@ -44,11 +44,19 @@ module HardBoiled
             self.class.define(value, self.subject, &block)
           end
         else
-          __format_value __apply_filters(value, options), options
+          __set_defaults __format_value(__apply_filters(value, options), options), options
         end
       self
     end
-    
+
+    def __set_defaults value, options
+      if value.nil? and default = options[:default]
+        default
+      else
+        value
+      end
+    end
+
     def __apply_filters value, options
       if filters = options[:filters]
         filters.inject(value) { |result, filter|

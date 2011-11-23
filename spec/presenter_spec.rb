@@ -19,6 +19,11 @@ describe HardBoiled::Presenter do
     OpenStruct.new({:temperature => 25, :boil_time => 7, :colour => "white"})
   }
 
+  let(:conventional_egg) {
+    OpenStruct.new({:temperature => 25, :boil_time => 5, 
+      :colour => "brownish", :organic => false})
+  }
+
   it "should produce correct hash" do
     definition = described_class.define egg do
       colour
@@ -93,5 +98,34 @@ describe HardBoiled::Presenter do
       }.to raise_error(HardBoiled::Presenter::MissingFilterError)
     end
 
+  end
+
+  context :defaults do
+    def with_defaults obj
+      Filterable.define obj do
+        colour :filters => [:upcase]
+        time :from => :boil_time
+        consumer "Lennart"
+        organic :default => true
+      end
+    end
+
+    it "should fallback to defaults" do
+      with_defaults(egg).should == {
+        :colour => "WHITE",
+        :time => 7,
+        :consumer => "Lennart",
+        :organic => true
+      }
+    end
+
+    it "should still use defined values" do
+      with_defaults(conventional_egg).should == {
+        :colour => "BROWNISH",
+        :time => 5,
+        :consumer => "Lennart",
+        :organic => false
+      }
+    end
   end
 end
