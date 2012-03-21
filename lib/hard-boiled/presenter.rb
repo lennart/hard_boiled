@@ -34,7 +34,23 @@ module HardBoiled
     private
     def method_missing id, *args, &block
       options = args.extract_options!
-      value = options[:nil] ? nil : (args.shift || (options[:parent] ? parent_subject : subject).__send__(options[:from] || id))
+      params = options[:params]
+      value =
+        if options[:nil]
+          nil
+        else
+          if static = args.shift
+            static
+          else
+            object = options[:parent] ? parent_subject : subject
+            method_name = options[:from] || id
+            if params
+              object.__send__ method_name, *params
+            else
+              object.__send__ method_name
+            end
+          end
+        end
       @hash[id] =
         if block_given?
           if value.kind_of? Array

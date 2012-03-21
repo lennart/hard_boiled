@@ -14,6 +14,24 @@ class Filterable < HardBoiled::Presenter
   include MyFilters
 end
 
+class Calculator
+  def add a, b 
+    a + b
+  end
+
+  def zero
+    0
+  end
+
+  def negative
+    -100
+  end
+
+  def tax val = 0.0
+    ((val + 1) * 2700).to_i
+  end
+end
+
 describe HardBoiled::Presenter do
   let(:egg) { 
     OpenStruct.new({:temperature => 25, :boil_time => 7, :colour => "white"})
@@ -36,6 +54,36 @@ describe HardBoiled::Presenter do
       :time => 7,
       :consumer => "Lennart"
     }
+  end
+
+  context :paramified do
+    it "should pass params to member function" do
+      definition = described_class.define(Calculator.new) do
+        negative
+        zero
+        add :params => [5, 2]
+      end
+
+      definition.should == {
+        :negative => -100,
+        :zero => 0,
+        :add => 7
+      }
+    end
+
+    it "should pass param to member function" do
+      definition = described_class.define(Calculator.new) do
+        null :from => :zero
+        tax
+        sales :from => :tax, :params => 0.19
+      end
+
+      definition.should == {
+        :null => 0,
+        :tax => 2700,
+        :sales => 3213
+      }
+    end
   end
 
   context :nested do
