@@ -1,7 +1,7 @@
 module HardBoiled
   require File.dirname(__FILE__)+'/extract_options' unless {}.respond_to?(:extractable_options?)
 
-  # This class pretty much resembles what Thoughtbot did in 
+  # This class pretty much resembles what Thoughtbot did in
   # [FactoryGirl's DefinitionProxy](https://github.com/thoughtbot/factory_girl/blob/master/lib/factory_girl/definition_proxy.rb)
   # although it just reduces a `class` to a simple `Hash`
   class Presenter
@@ -77,7 +77,7 @@ module HardBoiled
     def __apply_filters value, options
       if filters = options[:filters]
         filters.inject(value) { |result, filter|
-          raise MissingFilterError unless self.respond_to?(filter)
+          raise MissingFilterError, filter unless self.respond_to?(filter)
           self.__send__(filter, result)
         }
       else
