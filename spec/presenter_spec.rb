@@ -15,7 +15,7 @@ class Filterable < HardBoiled::Presenter
 end
 
 class Calculator
-  def add a, b 
+  def add a, b
     a + b
   end
 
@@ -33,17 +33,17 @@ class Calculator
 end
 
 describe HardBoiled::Presenter do
-  let(:egg) { 
+  let(:egg) {
     OpenStruct.new({:temperature => 25, :boil_time => 7, :colour => "white"})
   }
 
   let(:conventional_egg) {
-    OpenStruct.new({:temperature => 25, :boil_time => 5, 
+    OpenStruct.new({:temperature => 25, :boil_time => 5,
       :colour => "brownish", :organic => false})
   }
 
   it "should produce correct hash" do
-    definition = described_class.define egg do
+    definition = described_class.define(egg) do
       colour
       time :from => :boil_time
       consumer "Lennart"
@@ -135,7 +135,7 @@ describe HardBoiled::Presenter do
         time :from => :boil_time
         consumer "Lennart"
       end
-        
+
       definition.should == {
         :colour => "WHITE",
         :time => 7,

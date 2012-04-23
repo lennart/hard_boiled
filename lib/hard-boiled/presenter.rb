@@ -77,7 +77,7 @@ module HardBoiled
     def __apply_filters value, options
       if filters = options[:filters]
         filters.inject(value) { |result, filter|
-          raise MissingFilterError, filter unless self.respond_to?(filter)
+          raise MissingFilterError, filter.to_s unless self.respond_to?(filter)
           self.__send__(filter, result)
         }
       else
