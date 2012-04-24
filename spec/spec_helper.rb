@@ -1,7 +1,7 @@
 require 'rubygems'
 require 'bundler/setup'
 
-require 'hard-boiled'
+require 'hard_boiled'
 
 require 'ostruct'
 

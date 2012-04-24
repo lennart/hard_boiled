@@ -1,10 +1,10 @@
 # -*- encoding: utf-8 -*-
 $:.push File.expand_path("../lib", __FILE__)
-require "hard-boiled/version"
+require "hard_boiled/version"
 
 Gem::Specification.new do |s|
-  s.name        = "hard-boiled"
-  s.version     = Hard::Boiled::VERSION
+  s.name        = "hard_boiled"
+  s.version     = HardBoiled::VERSION
   s.platform    = Gem::Platform::RUBY
   s.authors     = ["Lennart Melzer"]
   s.email       = ["me@lmaa.name"]
@@ -14,11 +14,11 @@ Gem::Specification.new do |s|
     HardBoiled helps you reducing your complex models (including their associations)
     down to simple hashes usable for serialization into JSON or XML.
 
-    It leverages a DSL similar to thoughtbot's FactoryGirl 
+    It leverages a DSL similar to thoughtbot's FactoryGirl
     to make mappings maintainable and pain-free.
   }
 
-  s.rubyforge_project = "hard-boiled"
+  s.rubyforge_project = "hard_boiled"
 
   s.files         = `git ls-files`.split("\n")
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
