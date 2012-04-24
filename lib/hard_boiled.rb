@@ -1,3 +1,3 @@
 module HardBoiled
-  autoload :Presenter, 'hard-boiled/presenter'
+  autoload :Presenter, 'hard_boiled/presenter'
 end
