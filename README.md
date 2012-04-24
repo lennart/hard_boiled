@@ -1,6 +1,6 @@
 ## HardBoiled
 
-simply define mapping from you model to a simple hash. For those who worked with [thoughtbot](http://thoughtbot.com)'s [factory girl](http://github.com/thoughtbot/factory_girl) the DSL should be familiar.
+simply define a mapping from your model to a simple hash. For those who worked with [thoughtbot](http://thoughtbot.com)'s [factory girl](http://github.com/thoughtbot/factory_girl) the DSL should be familiar.
 
 ### Installation
 
@@ -22,6 +22,21 @@ HardBoiled::Presenter.define egg do
   colour
   temperature :format => "%d ℃"
 end # => { :time => 7, :temperature => "99 ℃", :colour => "beige" }
+
+# Or with traits
+
+HardBoiled::Presenter.define(egg, :only => [:instructions]) do
+  with_trait(:instructions) do
+    time :from => :boil_time
+    temperature :format => "%d ℃"
+  end
+  
+  with_trait(:presentation) do
+    colour
+  end
+  
+  omnipresent_slogan "proudly produced on organic farms"
+end # => { :time => 7, :temperature => "99 ℃", :omnipresent_slogan => "proudly produced on organic farms" }
 ```
 
 for more examples see the tests in the `spec` directory.
