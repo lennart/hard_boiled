@@ -183,4 +183,33 @@ describe HardBoiled::Presenter do
       }
     end
   end
+
+  context :traits do
+    def with_traits obj, options = {}
+      Filterable.define(obj, options) {
+        with_trait(:instructions) {
+          with_trait(:timing) {
+            boil_time
+          }
+          temperature
+        }
+        with_trait(:presentation) {
+          colour
+        }
+      }
+    end
+
+    it "should just map instructions" do
+      with_traits(egg, :only => [:instructions]).should == {
+        :temperature => 25
+      }
+    end
+
+    it "should map everything except for timing information" do
+      with_traits(egg, :except => [:timing]).should == {
+        :colour => "white",
+        :temperature => 25
+      }
+    end
+  end
 end

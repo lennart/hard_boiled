@@ -1,5 +1,7 @@
 module HardBoiled
+  # Boilerplate
   require File.dirname(__FILE__)+'/extract_options' unless {}.respond_to?(:extractable_options?)
+  require File.dirname(__FILE__)+'/blank' unless nil.respond_to?(:blank?)
 
   # This class pretty much resembles what Thoughtbot did in
   # [FactoryGirl's DefinitionProxy](https://github.com/thoughtbot/factory_girl/blob/master/lib/factory_girl/definition_proxy.rb)
@@ -14,17 +16,30 @@ module HardBoiled
 
     attr_reader :subject, :parent_subject
 
-    def self.define object, parent = nil, &block
+    def self.define *args, &block
       # if I could only remove the duplicate `obj`
-      obj = new(object, parent)
+      obj = new(*args)
       obj.instance_eval(&block)
       obj.to_hash
     end
 
-    def initialize subject, parent = nil
-      @subject = subject
-      @parent_subject = parent
+    def initialize *args
+      @options = args.extract_options!
+      @subject, @parent_subject = args
       @hash = {}
+    end
+
+
+    # Decide whether the given trait is being needed
+    #
+    # @param [Symbol] name the identifier for a trait, like :profile
+    # @param [Hash{:only => Array, :except => Array}]
+    # @return [true, false] dependening on in- or exclusion of this trait
+    def with_trait name, &block
+      if (@options[:except].blank? || !@options[:except].include?(name)) &&
+        (@options[:only].blank? || @options[:only].include?(name))
+        self.instance_eval(&block)
+      end
     end
 
     def to_hash
