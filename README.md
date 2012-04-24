@@ -4,12 +4,12 @@ simply define a mapping from your model to a simple hash. For those who worked w
 
 ### Installation
 
-    gem install hard-boiled
+    gem install hard_boiled
 
 ### Usage
 
 ```ruby
-require 'hard-boiled'
+require 'hard_boiled'
 
 egg = OpenStruct.new({
   :boil_time => 7,
@@ -21,7 +21,8 @@ HardBoiled::Presenter.define egg do
   time :from => :boil_time
   colour
   temperature :format => "%d ℃"
-end # => { :time => 7, :temperature => "99 ℃", :colour => "beige" }
+end
+# => { :time => 7, :temperature => "99 ℃", :colour => "beige" }
 
 # Or with traits
 
@@ -36,14 +37,15 @@ HardBoiled::Presenter.define(egg, :only => [:instructions]) do
   end
   
   omnipresent_slogan "proudly produced on organic farms"
-end # => { :time => 7, :temperature => "99 ℃", :omnipresent_slogan => "proudly produced on organic farms" }
+end
+# => { :time => 7, :temperature => "99 ℃", :omnipresent_slogan => "proudly produced on organic farms" }
 ```
 
 for more examples see the tests in the `spec` directory.
 
 ### Similar Projects
 
-If _hard-boiled_ isn't your cup of tea, go and check out other ways to map models
+If _hard\_boiled_ isn't your cup of tea, go and check out other ways to map models
 to hashes (for data serialization):
 
 * [Representative](https://github.com/mdub/representative)
